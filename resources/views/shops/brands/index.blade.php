@@ -7,9 +7,10 @@
         <div class="col-md-4">
             @include('shops.components.category_list')
             @include('shops.components.brands_list')
+
         </div>
         <div class="col-md-8">
-            <h2>{{ __('Все категории') }}</h2>
+            <h2>{{ __('Все бренды') }}</h2>
         </div>
     </div>
 @endsection
