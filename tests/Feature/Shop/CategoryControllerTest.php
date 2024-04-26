@@ -23,7 +23,7 @@ class CategoryControllerTest extends TestCase
         $perPage = 10;
 
         $response = $this->get(route('shop.categories.index'));
-        $products = Product::with('category')
+        $products = Product::with('category', 'brand')
             ->where('is_active', '=', FieldStatus::TURN_ON->value)
             ->orderByDesc('id')
             ->paginate($perPage)
@@ -47,7 +47,7 @@ class CategoryControllerTest extends TestCase
         $perPage = 10;
 
         $response = $this->get(route('shop.categories.single', $item));
-        $products = Product::with('category')
+        $products = Product::with('category', 'brand')
             ->where('is_active', '=', FieldStatus::TURN_ON->value)
             ->where('category_id', '=', $item->id)
             ->orderByDesc('id')
@@ -55,7 +55,7 @@ class CategoryControllerTest extends TestCase
             ->withQueryString();
 
         if ($products->isEmpty()) {
-            $products = Product::with('category')
+            $products = Product::with('category', 'brand')
                 ->where('is_active', '=', FieldStatus::TURN_ON->value)
                 ->whereIn('category_id', function ($builder) use ($item) {
                     $builder->select('id')->from('categories')->where('parent_id', '=', $item->id);

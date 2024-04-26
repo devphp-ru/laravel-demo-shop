@@ -13,7 +13,7 @@ class CategoryController extends BaseController
     {
         $title = __('Каталог товаров');
         $perPage = 10;
-        $products = Product::with('category')
+        $products = Product::with('category', 'brand')
             ->where('is_active', '=', FieldStatus::TURN_ON->value)
             ->orderByDesc('id')
             ->paginate($perPage)
@@ -29,7 +29,7 @@ class CategoryController extends BaseController
     {
         $title = __('Категория: ' . $category->name);
         $perPage = 10;
-        $products = Product::with('category')
+        $products = Product::with('category', 'brand')
             ->where('is_active', '=', FieldStatus::TURN_ON->value)
             ->where('category_id', '=', $category->id)
             ->orderByDesc('id')
@@ -37,7 +37,7 @@ class CategoryController extends BaseController
             ->withQueryString();
 
         if ($products->isEmpty()) {
-            $products = Product::with('category')
+            $products = Product::with('category', 'brand')
                 ->where('is_active', '=', FieldStatus::TURN_ON)
                 ->whereIn('category_id', function ($builder) use ($category) {
                    $builder->select('id')->from('categories')->where('parent_id', '=', $category->id);

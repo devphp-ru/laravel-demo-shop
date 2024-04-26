@@ -19,6 +19,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ __($value->title) }}</h5>
                                     <p class="card-text">{{ $value->category->name }}</p>
+                                    <p class="card-text">{{ $value->brand->name }}</p>
                                     <p class="card-text">{{ $value->price }} руб.</p>
                                     <a href="#" class="btn btn-primary">В корзину</a>
                                 </div>
