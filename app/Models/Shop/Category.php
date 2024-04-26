@@ -3,6 +3,7 @@
 namespace App\Models\Shop;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Category
@@ -34,5 +35,10 @@ class Category extends BaseModel
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 
 }

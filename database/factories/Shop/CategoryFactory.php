@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         static $i = 0;
-        $name = fake()->unique()->words(mt_rand(3, 6), true);
+        $name = fake()->unique()->words(mt_rand(1, 2), true);
 
         return [
             'parent_id' => (++$i > 4) ? mt_rand(1, 4) : 0,
