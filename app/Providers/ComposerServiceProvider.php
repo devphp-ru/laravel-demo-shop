@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Shop\Brand;
 use App\Models\Shop\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -17,6 +18,10 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('shops.components.category_list', function ($view) {
             $view->with('categories', Category::getActiveList());
+        });
+
+        View::composer('shops.components.brands_list', function ($view) {
+            $view->with('brands', Brand::getActiveList());
         });
     }
 }

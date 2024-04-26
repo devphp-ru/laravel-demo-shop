@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('shop.categories.index') }}">{{ __('Каталог') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('shop.brands.index') }}">{{ __('Бренды') }}</a>
+                </li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
