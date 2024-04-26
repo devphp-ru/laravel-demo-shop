@@ -47,4 +47,9 @@ class Product extends BaseModel
         return $this->belongsTo(Category::class);
     }
 
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
 }
