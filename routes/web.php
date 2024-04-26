@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\Shop\CategoryController;
 use App\Http\Controllers\Shop\BrandController;
+use App\Http\Controllers\Shop\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\Shop\BrandController;
 |
 */
 
+Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('shop.product.single');
 Route::get('/brands/{brand:slug}', [BrandController::class, 'brand'])->name('shop.brands.single');
 Route::get('/brands', [BrandController::class, 'index'])->name('shop.brands.index');
 Route::get('/catalog/{category:slug}', [CategoryController::class, 'category'])->name('shop.categories.single');

@@ -15,9 +15,9 @@
                     @foreach ($paginator as $value)
                         <div class="col-md-4 mb-2">
                             <div class="card">
-                                <img src="{{ $value->thumbnail }}" class="card-img-top" alt="...">
+                                <a href="{{ route('shop.product.single', $value) }}"><img src="{{ $value->thumbnail }}" class="card-img-top" alt="..."></a>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ __($value->title) }}</h5>
+                                    <h5 class="card-title"><a href="{{ route('shop.product.single', $value) }}">{{ __($value->title) }}</a></h5>
                                     <p class="card-text">{{ $value->category->name }}</p>
                                     <p class="card-text">{{ $value->brand->name }}</p>
                                     <p class="card-text">{{ $value->price }} руб.</p>
