@@ -11,11 +11,8 @@ class CategoryController extends BaseController
     {
         $title = __('Каталог товаров');
 
-        $categories = Category::with('children')->where('parent_id', '=', 0)->get();
-
         return view('shops.categories.index', [
             'title' => $title,
-            'categories' => $categories,
         ]);
     }
 
@@ -23,11 +20,8 @@ class CategoryController extends BaseController
     {
         $title = __('Категория: ' . $category->name);
 
-        $categories = Category::with('children')->where('parent_id', '=', 0)->get();
-
         return view('shops.categories.single', [
             'title' => $title,
-            'categories' => $categories,
         ]);
     }
 

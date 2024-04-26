@@ -3,7 +3,9 @@
 namespace App\Models\Shop;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Enums\FieldStatus;
 
 /**
  * Class Category
@@ -39,6 +41,14 @@ class Category extends BaseModel
     public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public static function getActiveList(): Collection
+    {
+        return self::with('children')
+            ->where('is_active', '=', FieldStatus::TURN_ON->value)
+            ->where('parent_id', '=', FieldStatus::TURN_OFF->value)
+            ->get();
     }
 
 }
