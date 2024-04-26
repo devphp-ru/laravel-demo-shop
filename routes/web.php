@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\Shop\CategoryController;
+use App\Http\Controllers\Shop\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Http\Controllers\Shop\CategoryController;
 |
 */
 
+Route::get('/brands/{brand:slug}', [BrandController::class, 'brand'])->name('shop.brands.single');
+Route::get('/brands', [BrandController::class, 'index'])->name('shop.brands.index');
 Route::get('/catalog/{category:slug}', [CategoryController::class, 'category'])->name('shop.categories.single');
 Route::get('/catalog', [CategoryController::class, 'index'])->name('shop.categories.index');
 Route::get('/', [ShopController::class, 'index'])->name('shop.index');
