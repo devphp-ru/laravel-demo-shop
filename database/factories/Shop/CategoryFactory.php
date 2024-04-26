@@ -21,7 +21,7 @@ class CategoryFactory extends Factory
         $name = fake()->unique()->words(mt_rand(1, 2), true);
 
         return [
-            'parent_id' => (++$i > 4) ? mt_rand(1, 4) : 0,
+            'parent_id' => (++$i > 4) ? mt_rand(1, 3) : 0,
             'slug' => Str::slug($name),
             'name' => $name,
             'content' => fake()->realText(mt_rand(150, 200)),
