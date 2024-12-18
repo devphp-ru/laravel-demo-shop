@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
+ * @property-read Product $products
+ *
  * @mixin Builder
  */
 class Category extends BaseModel
@@ -47,6 +49,11 @@ class Category extends BaseModel
     public static function getListNestedCategories(): Collection
     {
         return self::query()->with(['children'])->where('parent_id', 0)->get();
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 
 }
