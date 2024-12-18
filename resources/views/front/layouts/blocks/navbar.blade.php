@@ -13,7 +13,7 @@
                     <a class="nav-link" aria-current="page" href="{{ route('categories.index') }}">{{ __('Каталог') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="">{{ __('Бренды') }}</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('brands.index') }}">{{ __('Бренды') }}</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

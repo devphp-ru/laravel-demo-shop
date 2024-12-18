@@ -10,8 +10,8 @@
     </div>
     <div class="col-md-8">
 
-        <h1>{{ $category->name }}</h1>
-        <p>{{ $category->description }}</p>
+        <h1>{{ $brand->name }}</h1>
+        <p>{{ $brand->description }}</p>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
