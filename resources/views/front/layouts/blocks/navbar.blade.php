@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('shop.index') }}">{{ __('Главная') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="">{{ __('Каталог') }}</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('categories.index') }}">{{ __('Каталог') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="">{{ __('Бренды') }}</a>
