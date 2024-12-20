@@ -9,8 +9,13 @@
                         <p class="card-text">
                             {{ $product->price }} Р
                         </p>
-                        <button class="btn btn-primary btn-sm" title="В корзину"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
-                        <button class="btn btn-danger btn-sm" title="В избранное"><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                        <div class="justify-content-start d-flex">
+                            <form action="{{ route('baskets.add', ['id' => $product->id]) }}" method="post" class="me-1">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm" title="В корзину"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
+                            </form>
+                            <button class="btn btn-danger btn-sm" title="В избранное"><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>

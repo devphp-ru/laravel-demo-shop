@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('brands.index') }}">{{ __('Бренды') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('baskets.index') }}">{{ __('Корзина') }} {{ $basket_count }}</a>
+                </li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
