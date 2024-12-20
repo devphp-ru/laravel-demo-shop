@@ -34,13 +34,13 @@ class Basket extends BaseModel
         return $this->findOrFail($basketId);
     }
 
-    public function addProduct(int $productId, int $quantity): ?Basket
+    public function addProduct(int $productId, int $quantity): bool
     {
         if ($this->products->contains($productId)) {
             $product = $this->products()->where('product_id', $productId)->first();
 
             if ($product->quantity < $quantity) {
-                return null;
+                return false;
             }
 
             $pivotRow = $product->pivot;
@@ -49,7 +49,7 @@ class Basket extends BaseModel
             $product = Product::findOrFail($productId);
 
             if ($product->quantity < $quantity) {
-                return null;
+                return false;
             }
 
             $this->products()->attach($productId, ['quantity' => $quantity]);
@@ -57,7 +57,7 @@ class Basket extends BaseModel
 
         $product->update(['quantity' => $product->quantity - $quantity]);
 
-        return $this;
+        return true;
     }
 
     public function increase(int $productId, int $count = 1): void
@@ -65,9 +65,11 @@ class Basket extends BaseModel
         $this->change($productId, $count);
     }
 
-    public function decrease(int $productId, int $count = -1): void
+    public function decrease(int $productId, int $count = -1): bool
     {
         $this->change($productId, $count);
+
+        return (bool)$this->getProductCount();
     }
 
     private function change(int $productId, int $count): void
@@ -88,13 +90,36 @@ class Basket extends BaseModel
         }
     }
 
-    public function removeProduct(int $productId): void
+    public function removeProduct(int $productId): bool
     {
         $product = $this->products()->where('product_id', $productId)->first();
         $pivotRow = $product->pivot;
         $product->update(['quantity' => $product->quantity + $pivotRow->quantity]);
         $this->products()->detach($productId);
         $this->touch();
+
+        if (!$this->getProductCount()) {
+            $this->delete();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getProductCount(): int
+    {
+        return $this->products->count();
+    }
+
+    public function getTotalAmount(): float
+    {
+        $result = 0;
+        foreach ($this->products as $product) {
+            $result += $product->price * $product->pivot->quantity;
+        }
+
+        return $result;
     }
 
 }

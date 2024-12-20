@@ -12,7 +12,7 @@
 
             <h1>{{ $title }}</h1>
 
-            @if (is_null($products) || $products->isEmpty())
+            @if (is_null($basket) || $basket->products->isEmpty())
                 <h3>Товаров нет</h3>
             @else
                 <form action="{{ route('baskets.clear') }}" method="post" class="text-end">
@@ -29,22 +29,13 @@
                         <th>Стоимость</th>
                         <th></th>
                     </tr>
-                    @php
-                        $basketCost = 0;
-                    @endphp
-                    @foreach($products as $product)
-                        @php
-                            $itemPrice = $product->price;
-                            $itemQuantity =  $product->pivot->quantity;
-                            $itemCost = $itemPrice * $itemQuantity;
-                            $basketCost = $basketCost + $itemCost;
-                        @endphp
+                    @foreach($basket->products as $product)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
                                 <a href="{{ route('products.show', $product) }}">{{ $product->title }}</a>
                             </td>
-                            <td>{{ number_format($itemPrice, 2, '.', '') }}</td>
+                            <td>{{ number_format($product->price, 2, '.', '') }}</td>
                             <td>
                                 <form action="{{ route('baskets.minus', ['id' => $product->id]) }}" method="post" class="d-inline">
                                     @csrf
@@ -52,7 +43,7 @@
                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                     </button>
                                 </form>
-                                <span class="mx-1">{{ $itemQuantity }}</span>
+                                <span class="mx-1">{{ $product->pivot->quantity }}</span>
                                 @if ($product->quantity)
                                     <form action="{{ route('baskets.plus', ['id' => $product->id]) }}" method="post" class="d-inline">
                                         @csrf
@@ -64,7 +55,7 @@
                                     <i class="fa fa-plus text-danger" aria-hidden="true" title="Максимальное количество товара"></i>
                                 @endif
                             </td>
-                            <td>{{ number_format($itemCost, 2, '.', '') }}</td>
+                            <td>{{ number_format($product->price * $product->pivot->quantity , 2, '.', '') }}</td>
                             <td>
                                 <form action="{{ route('baskets.remove', $product) }}" method="post" class="text-center">
                                     @csrf
@@ -77,7 +68,7 @@
                     @endforeach
                     <tr>
                         <th colspan="4" class="text-right">Итого</th>
-                        <th>{{ number_format($basketCost, 2, '.', '') }}</th>
+                        <th>{{ number_format($basket->getTotalAmount(), 2, '.', '') }}</th>
                     </tr>
                 </table>
             @endif

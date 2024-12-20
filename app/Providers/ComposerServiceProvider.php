@@ -27,8 +27,8 @@ class ComposerServiceProvider extends ServiceProvider
 
         View::composer('front.layouts.blocks.navbar', function ($view) {
             $basketId = request()->cookie('basket_id');
-            $basket = Basket::query()->find($basketId);
-            $view->with('basket_count', $basket?->products->count() ?? 0);
+            $basket = Basket::find($basketId);
+            $view->with('basket_count', $basket?->getProductCount() ?? 0);
         });
     }
 

@@ -10,7 +10,7 @@
                             {{ $product->price }} Р
                         </p>
                         <div class="justify-content-start d-flex">
-                            <form action="{{ route('baskets.add', ['id' => $product->id]) }}" method="post" class="me-1">
+                            <form action="{{ route('baskets.add', $product) }}" method="post" class="me-1">
                                 @csrf
                                 <button type="submit" class="btn btn-primary btn-sm" title="В корзину"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
                             </form>

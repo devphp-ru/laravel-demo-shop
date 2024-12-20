@@ -18,12 +18,12 @@ class BasketController extends BaseController
         $basketId = $request->cookie('basket_id');
 
         if (!is_null($basketId)) {
-            $products = $this->basket->findOrFail($basketId)->products;
+            $basket = $this->basket->findOrFail($basketId);
         }
 
         return view('front.baskets.index', [
             'title' => $title,
-            'products' => $products ?? null,
+            'basket' => $basket ?? null,
         ]);
     }
 
@@ -44,10 +44,10 @@ class BasketController extends BaseController
         $basket = $this->basket->get($basketId);
         $result = $basket->addProduct($id, $quantity);
 
-        if (is_null($result)) {
+        if (!$result) {
             return back()
                 ->withCookie(cookie('basket_id', $basket->id, time() + 24 * 60 * 60))
-                ->with(['error' => 'Такого количества нет на складе.']);
+                ->with(['error' => 'Такого количества нет на складе']);
         }
 
         return back()->withCookie(cookie('basket_id', $basket->id, time() + 24 * 60 * 60));
@@ -68,7 +68,11 @@ class BasketController extends BaseController
     {
         $basketId = $request->cookie('basket_id');
         $basket = $this->basket->get($basketId);
-        $basket->decrease($id);
+        $isEmpty = $basket->decrease($id);
+
+        if (!$isEmpty) {
+            Cookie::queue(Cookie::forget('basket_id'));
+        }
 
         return redirect()
             ->route('baskets.index')
@@ -79,11 +83,15 @@ class BasketController extends BaseController
     {
         $basketId = $request->cookie('basket_id');
         $basket = $this->basket->get($basketId);
-        $basket->removeProduct($id);
+        $isEmpty = $basket->removeProduct($id);
+
+        if ($isEmpty) {
+            Cookie::queue(Cookie::forget('basket_id'));
+        }
 
         return redirect()
             ->route('baskets.index')
-            ->with(['success' => __('Успешно удалено.')]);
+            ->with(['success' => __('Успешно удалено')]);
     }
 
     public function clear(Request $request): RedirectResponse
