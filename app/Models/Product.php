@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -67,6 +68,11 @@ class Product extends BaseModel
     public function brand(): BelongsTo
     {
         return $this->belongsto(Brand::class);
+    }
+
+    public function baskets(): BelongsToMany
+    {
+        return $this->belongsToMany(Basket::class, 'basket_items')->withPivot('quantity');
     }
 
 }
